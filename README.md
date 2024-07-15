@@ -12,15 +12,10 @@
   1. Kubernetes - Überblick
      * [Warum Kubernetes, was macht Kubernetes](warum-kubernetes.md) 
      * [Aufbau Allgemein](/kubernetes/architecture.md)
-
-  1. Kubernetes - microk8s (Installation und Management) 
-     * [Installation Ubuntu - snap](microk8s/installation-ubuntu-snap.md)
-     * [Create a cluster with microk8s](microk8s/cluster.md)
-     * [Remote-Verbindung zu Kubernetes (microk8s) einrichten](microk8s/connect-from-remote.md)
+    
+  1. Kubernetes Einrichtung
+     * [kubectl einrichten mit namespace](/kubectl/kubectl-einrichten.md)
      * [Bash completion installieren](kubectl/bash-completion.md)
-     * [vim support for yaml](vim/vim-yaml.md)
-     * [nano-support for yaml](nano/nano-yaml.md)
-     * [Ingress controller in microk8s aktivieren](microk8s/ingress.md) 
 
   1. Kubernetes Praxis API-Objekte 
      * [Das Tool kubectl (Devs/Ops) - Spickzettel](/kubectl/spickzettel.md)
@@ -141,7 +136,15 @@
   1. Kubernetes - microk8s (Installation und Management) 
      * [kubectl unter windows - Remote-Verbindung zu Kuberenets (microk8s) einrichten](kubectl-windows.md)
      * [Arbeiten mit der Registry](microk8s/registry.md)
-     * [Installation Kubernetes Dashboard](/microk8s/dashboard.md) 
+     * [Installation Kubernetes Dashboard](/microk8s/dashboard.md)
+    
+  1. Kubernetes - microk8s (Installation und Management) 
+     * [Installation Ubuntu - snap](microk8s/installation-ubuntu-snap.md)
+     * [Create a cluster with microk8s](microk8s/cluster.md)
+     * [Remote-Verbindung zu Kubernetes (microk8s) einrichten](microk8s/connect-from-remote.md)
+     * [vim support for yaml](vim/vim-yaml.md)
+     * [nano-support for yaml](nano/nano-yaml.md)
+     * [Ingress controller in microk8s aktivieren](microk8s/ingress.md) 
 
   1. Kubernetes - RBAC 
      * [Nutzer einrichten - kubernetes bis 1.24](/kubernetes/rbac-create-user.md) 
