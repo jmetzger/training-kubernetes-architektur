@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: my-nginx
+      app: my-nginx
   replicas: 3
   template:
     metadata:
       labels:
-        run: my-nginx
+      app: my-nginx
     spec:
       containers:
       - name: my-nginx
@@ -45,14 +45,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: my-nginx
-  labels:
-    svc: nginx
 spec:
   ports:
   - port: 80
     protocol: TCP
   selector:
-    run: my-nginx
+    app: my-nginx
 ```
 
 ```
