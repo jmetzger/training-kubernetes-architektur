@@ -5,6 +5,11 @@
  1. Deploy a working version
  2. Deploy a new version that fails with OOM-Killer (but we can be sure pod from old replicaset still works) 
 
+## Hint: more than 1 replica 
+
+  * If you have more than one replicasm, system will still work
+  * Keeping replicas - 1 (So 3 replicas, still 2 left)  
+
 ## Step 1: Create deployment that works 
 
 ```
@@ -25,11 +30,11 @@ kind: Deployment
 metadata:
   name: deploy-memtest
 spec:
-#  minReadySeconds: 120
+  minReadySeconds: 120
   selector:
     matchLabels:
       app: memtest
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -71,11 +76,11 @@ kind: Deployment
 metadata:
   name: deploy-memtest
 spec:
-#  minReadySeconds: 120
+  minReadySeconds: 120
   selector:
     matchLabels:
       app: memtest
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
