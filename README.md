@@ -1,4 +1,4 @@
-# Kubernetes und Docker Administration und Orchestrierung 
+# Kubernetes Architektur
 
 ## Agenda 
 
