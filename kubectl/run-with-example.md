@@ -14,7 +14,7 @@ kubectl run nginx --image=nginx:1.25.1
 
 kubectl get pods 
 # Alle nodes anzeigen
-kubectl get nods -o wide 
+kubectl get nodes -o wide 
 # Auf welchem Node läuft der Pods
 kubectl get pods -o wide 
 ```
