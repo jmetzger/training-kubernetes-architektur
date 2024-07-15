@@ -8,6 +8,7 @@
 ## Step 1: Create deployment that works 
 
 ```
+cd
 mkdir -p manifests
 cd manifests
 mkdir -p stress
