@@ -15,7 +15,6 @@ cd stress
 ```
 
 ```
-kubectl create ns mem-example 
 nano deployment.yml
 ```
 
@@ -24,7 +23,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-memtest
-  namespace: mem-example
 spec:
 #  minReadySeconds: 120
   selector:
@@ -51,7 +49,7 @@ spec:
 
 ```
 kubectl apply -f .
-kubectl -n mem-example get all
+kubectl get all
 kubectl get pods 
 ```
 
@@ -71,7 +69,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-memtest
-  namespace: mem-example
 spec:
 #  minReadySeconds: 120
   selector:
@@ -97,9 +94,9 @@ spec:
 ```
 
 ```
-kubectl -n mem-example get all
+kubectl get all
 kubectl apply -f .
-kubectl -n mem-example get all
+kubectl get all
 # after a while we will see the new pod being in mode OOMKiller 
-kubectl -n mem-example get pods -w 
+watch -n 1 -d kubectl get pods 
 ```
