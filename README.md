@@ -12,8 +12,6 @@
   1. Kubernetes - Überblick
      * [Warum Kubernetes, was macht Kubernetes](warum-kubernetes.md) 
      * [Aufbau Allgemein](/kubernetes/architecture.md)
-     * [Aufbau mit helm,OpenShift,Rancher(RKE),microk8s](/kubernetes/aufbau-helm-microk8s-kubernetes.md)
-     * [Welches System ? (minikube, micro8ks etc.)](welches-system.md)
 
   1. Kubernetes - microk8s (Installation und Management) 
      * [Installation Ubuntu - snap](microk8s/installation-ubuntu-snap.md)
@@ -137,6 +135,8 @@
     
   1. Kubernetes - Überblick
      * [Installation - Welche Komponenten from scratch](/kubernetes/installation-components-overview.md)
+     * [Aufbau mit helm,OpenShift,Rancher(RKE),microk8s](/kubernetes/aufbau-helm-microk8s-kubernetes.md)
+     * [Welches System ? (minikube, micro8ks etc.)](welches-system.md)
 
   1. Kubernetes - microk8s (Installation und Management) 
      * [kubectl unter windows - Remote-Verbindung zu Kuberenets (microk8s) einrichten](kubectl-windows.md)
