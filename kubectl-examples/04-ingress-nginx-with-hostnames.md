@@ -4,22 +4,21 @@
 
 ```
 # Ingress Controller muss aktiviert sein 
-## Nur der Fall wenn man microk8s zum Einrichten verwendet 
-## Ubuntu 
 microk8s enable ingress
 ```
 
 ## Walkthrough 
 
-### Step 1: pods and services
+### Schritt 1:
 
 ```
-cd
+cd 
 mkdir -p manifests
 cd manifests 
 mkdir abi
-cd abi
+cd abi 
 ```
+
 
 ```
 # apple.yml 
@@ -35,7 +34,7 @@ spec:
     - name: apple-app
       image: hashicorp/http-echo
       args:
-        - "-text=apple-<dein-name>"
+        - "-text=apple"
 ---
 
 kind: Service
@@ -69,7 +68,7 @@ spec:
     - name: banana-app
       image: hashicorp/http-echo
       args:
-        - "-text=banana-<dein-name>"
+        - "-text=banana"
 
 ---
 
@@ -89,7 +88,7 @@ spec:
 kubectl apply -f banana.yml
 ```
 
-## Step 2: Ingress 
+### Schritt 2:
 
 ```
 # Ingress
@@ -99,15 +98,10 @@ metadata:
   name: example-ingress
   annotations:
     ingress.kubernetes.io/rewrite-target: /
-    # with the ingress controller from helm, you need to set an annotation 
-    # otherwice it does not know, which controller to use
-    # old version... use ingressClassName instead 
-    # kubernetes.io/ingress.class: nginx
 spec:
   ingressClassName: nginx
   rules:
-  - host: "<euername>.lab<nr>.t3isp.de"
-    http:
+  - http:
       paths:
         - path: /apple
           backend:
@@ -154,15 +148,10 @@ metadata:
   name: example-ingress
   annotations:
     ingress.kubernetes.io/rewrite-target: /
-    # with the ingress controller from helm, you need to set an annotation 
-    # old version useClassName instead 
-    # otherwice it does not know, which controller to use
-    # kubernetes.io/ingress.class: nginx 
 spec:
   ingressClassName: nginx
   rules:
-  - host: "app12.lab.t3isp.de"
-    http:
+  - http:
       paths:
         - path: /apple
           pathType: Prefix
