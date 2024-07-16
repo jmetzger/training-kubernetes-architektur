@@ -1,24 +1,14 @@
-# Ingress Nginx 
+# Ingress Nginx mit Hostnamen/Domains
 
-## Prerequisits
-
-```
-# Ingress Controller muss aktiviert sein 
-microk8s enable ingress
-```
-
-## Walkthrough 
-
-### Schritt 1:
+## Step 1: Walkthrough 
 
 ```
 cd 
-mkdir -p manifests
-cd manifests 
-mkdir abi
-cd abi 
+cd manifests
+mkdir abi 
+cd abi
+nano apple.yml 
 ```
-
 
 ```
 # apple.yml 
@@ -34,7 +24,7 @@ spec:
     - name: apple-app
       image: hashicorp/http-echo
       args:
-        - "-text=apple"
+        - "-text=apple-<euer-name>"
 ---
 
 kind: Service
@@ -55,6 +45,11 @@ kubectl apply -f apple.yml
 ```
 
 ```
+nano banana.yml
+```
+
+
+```
 # banana
 # vi banana.yml
 kind: Pod
@@ -68,7 +63,7 @@ spec:
     - name: banana-app
       image: hashicorp/http-echo
       args:
-        - "-text=banana"
+        - "-text=banana-<euer-name>"
 
 ---
 
@@ -88,7 +83,24 @@ spec:
 kubectl apply -f banana.yml
 ```
 
-### Schritt 2:
+## Step 2: Testing connection by podIP and Service 
+
+```
+kubectl get svc
+kubectl get pods -o wide
+kubectl run podtest --rm -it --image busybox
+```
+
+```
+/ # wget -O - http://<pod-ip>:5678 
+/ # wget -O - http://<cluster-ip>
+```
+
+## Step 3: Walkthrough 
+
+```
+nano ingress.yml
+```
 
 ```
 # Ingress
@@ -101,7 +113,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - http:
+  - host: "<euername>.app1.t3isp.de"
+    http:
       paths:
         - path: /apple
           backend:
@@ -116,7 +129,6 @@ spec:
 ```
 # ingress 
 kubectl apply -f ingress.yml
-kubectl get ing 
 ```
 
 ## Reference 
@@ -151,7 +163,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - http:
+  - host: "app12.lab1.t3isp.de"
+    http:
       paths:
         - path: /apple
           pathType: Prefix
