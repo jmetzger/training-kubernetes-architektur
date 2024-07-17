@@ -49,6 +49,9 @@
   1. Kubernetes Storage (CSI) 
      * [Überblick Persistant Volumes (CSI)](kubernetes-csi/overview.md)
      * [Übung Persistant Storage](kubernetes-csi/nfs-exercise.md)
+    
+  1. Kubernetes Secrets
+     * [Sealed Secrets](kubernetes/secrets/sealed-secrets.md)
         
   1. kubectl 
      * [Start pod (container with run && examples)](/kubectl/run-with-example.md)
