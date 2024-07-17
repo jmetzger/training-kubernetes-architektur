@@ -46,52 +46,26 @@
      * [Helm Warum ?](/helm/warum.md)
      * [Helm Example](/helm/example.md)
 
-  1. Kubernetes - RBAC 
-     * [Nutzer einrichten microk8s ab kubernetes 1.25](/kubernetes/rbac-create-user-kubernetes-1-25.md) 
- 
-  1. Kubernetes - Netzwerk (CNI's) / Mesh
-     * [Netzwerk Interna](/kubernetes-networks/networking-internal-overview.md)
-     * [Übersicht Netzwerke](/kubernetes-networks/overview.md) 
-     * [Calico - nginx example NetworkPolicy](/kubernetes-network/callico/00-simple-example.md)
-     * [Beispiele Ingress Egress NetworkPolicy](kubernetes-networks/examples-ingress-egress.md)
-     * [Mesh / istio](sammlung-istio.md)  
-     * [Kubernetes Ports/Protokolle](https://kubernetes.io/docs/reference/networking/ports-and-protocols/)
-     * [IPV4/IPV6 Dualstack](https://kubernetes.io/docs/concepts/services-networking/dual-stack/)
-   
+  1. Kubernetes Storage (CSI) 
+     * [Überblick Persistant Volumes (CSI)](kubernetes-csi/overview.md)
+     * [Übung Persistant Storage](kubernetes-csi/nfs-exercise.md)
+        
   1. kubectl 
      * [Start pod (container with run && examples)](/kubectl/run-with-example.md)
      * [Bash completion for kubectl](/kubectl/bash-completion.md)
      * [kubectl Spickzettel](/kubectl/spickzettel.md)
      * [Tipps&Tricks zu Deploymnent - Rollout](/kubectl/rollout.md) 
 
-  1. Kubernetes - Shared Volumes 
-     * [Shared Volumes with nfs](shared-volumes/nfs-multi.md)
-
-  1. Kubernetes - Wartung / Debugging 
-     * [kubectl drain/uncordon](/kubectl/uncordon-drain.md)
-     * [Alte manifeste konvertieren mit convert plugin](/kubectl/convert-plugin.md)
+  1. Kubernetes Wartung / Debugging 
      * [Netzwerkverbindung zu pod testen](/tipps-tricks/verbindung-zu-pod-testen.md)
-     * [Curl from pod api-server](/kubernetes-advanced/curl-api-server.md)
 
   1. Kubernetes - Tipps & Tricks 
      * [Kubernetes Debuggen ClusterIP/PodIP](/tipps-tricks/cluster-ip-debug.md)
      * [Debugging pods](tipps-tricks/debugging-pods.md)
      * [Taints und Tolerations](kubernetes/taints-tolerations.md)
      * [Autoscaling Pods/Deployments](/kubernetes/autoscaling.md)
-
-  1. Kubernetes Advanced 
-     * [Curl api-server kubernetes aus pod heraus](kubernetes-advanced/curl-api-server.md)
-
-  1. Kubernetes - Documentation 
-     * [Documentation zu microk8s plugins/addons](https://microk8s.io/docs/addons)  
-     * [Shared Volumes - Welche gibt es ?](https://kubernetes.io/docs/concepts/storage/volumes/)
-
-  1. Kubernetes - Hardening 
-     * [Kubernetes Tipps Hardening](kubernetes-security/tipps-hardening.md)
-     * [Kubernetes Security Admission Controller Example](kubernetes-security/pod-security-admission.md)
      
-  1. Kubernetes Interna / Misc.
-     * [OCI,Container,Images Standards](docker-alternatives-kubernetes.md)
+  1. Kubernetes Interna/Misc.
      * [Geolocation Kubernetes Cluster](https://learnk8s.io/bite-sized/connecting-multiple-kubernetes-clusters)
     
   1. Kubernetes Documentation (Empfehlung !)
@@ -152,8 +126,28 @@
      * [nano-support for yaml](nano/nano-yaml.md)
      * [Ingress controller in microk8s aktivieren](microk8s/ingress.md) 
 
+  1. Kubernetes - Wartung / Debugging 
+     * [kubectl drain/uncordon](/kubectl/uncordon-drain.md)
+     * [Alte manifeste konvertieren mit convert plugin](/kubectl/convert-plugin.md)
+   
+     * [Curl from pod api-server](/kubernetes-advanced/curl-api-server.md)
+
+
   1. Kubernetes - RBAC 
      * [Nutzer einrichten - kubernetes bis 1.24](/kubernetes/rbac-create-user.md) 
+     * [Nutzer einrichten microk8s ab kubernetes 1.25](/kubernetes/rbac-create-user-kubernetes-1-25.md)
+    
+  1. Kubernetes Interna / Misc.
+     * [OCI,Container,Images Standards](docker-alternatives-kubernetes.md)
+ 
+  1. Kubernetes - Netzwerk (CNI's) / Mesh
+     * [Netzwerk Interna](/kubernetes-networks/networking-internal-overview.md)
+     * [Übersicht Netzwerke](/kubernetes-networks/overview.md) 
+     * [Calico - nginx example NetworkPolicy](/kubernetes-network/callico/00-simple-example.md)
+     * [Beispiele Ingress Egress NetworkPolicy](kubernetes-networks/examples-ingress-egress.md)
+     * [Mesh / istio](sammlung-istio.md)  
+     * [Kubernetes Ports/Protokolle](https://kubernetes.io/docs/reference/networking/ports-and-protocols/)
+     * [IPV4/IPV6 Dualstack](https://kubernetes.io/docs/concepts/services-networking/dual-stack/)
      
   1. kubectl 
      * [Tipps&Tricks zu Deploymnent - Rollout](/kubectl/rollout.md) 
@@ -183,6 +177,20 @@
   1. Kubernetes Deployment Scenarios 
      * [Deployment green/blue,canary,rolling update](/kubernetes/deployment-strategies-en.md)
      * [Praxis-Übung A/B Deployment](/kubectl-examples/08-ab-deployment.md)
+
+  1. Kubernetes Advanced 
+     * [Curl api-server kubernetes aus pod heraus](kubernetes-advanced/curl-api-server.md)
+
+  1. Kubernetes - Documentation 
+     * [Documentation zu microk8s plugins/addons](https://microk8s.io/docs/addons)  
+     * [Shared Volumes - Welche gibt es ?](https://kubernetes.io/docs/concepts/storage/volumes/)
+
+  1. Kubernetes - Hardening 
+     * [Kubernetes Tipps Hardening](kubernetes-security/tipps-hardening.md)
+     * [Kubernetes Security Admission Controller Example](kubernetes-security/pod-security-admission.md)
+    
+  1. Kubernetes - Shared Volumes (alt)
+     * [Shared Volumes with nfs](shared-volumes/nfs-multi.md)
 
   1. Kubernetes Probes (Liveness and Readiness) 
      * [Übung Liveness-Probe](/probes/uebung-liveness.md)
