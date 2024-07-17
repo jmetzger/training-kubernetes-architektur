@@ -98,7 +98,7 @@
      * [Kubernetes Tasks](https://kubernetes.io/docs/tasks)
 
   1. Kubernetes Lernen (Lernumgebung)
-     * [Killerkoda](https://killercoda.com/)
+     * [Killercoda](https://killercoda.com/)
   
 ## Backlog
 
