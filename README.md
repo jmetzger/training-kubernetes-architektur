@@ -93,6 +93,12 @@
   1. Kubernetes Interna / Misc.
      * [OCI,Container,Images Standards](docker-alternatives-kubernetes.md)
      * [Geolocation Kubernetes Cluster](https://learnk8s.io/bite-sized/connecting-multiple-kubernetes-clusters)
+    
+  1. Kubernetes Documentation (Empfehlung !)
+     * [Kubernetes Tasks](https://kubernetes.io/docs/tasks)
+
+  1. Kubernetes Lernen (Lernumgebung)
+     * [Killerkoda](https://killercoda.com/)
   
 ## Backlog
 
