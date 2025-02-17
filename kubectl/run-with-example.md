@@ -22,7 +22,7 @@ kubectl get pods -o wide
 ## Beispiel 2 (das nicht funktioniert !!)
 
 ```
-kubectl run foo2 --image=foo2
+kubectl run meinfoo --image=foo2
 # ImageErrPull - Image konnte nicht geladen werden 
 kubectl get pods 
 # Weitere status - info 
