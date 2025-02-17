@@ -11,6 +11,10 @@ cd 04-service
 ```
 
 ```
+nano 01-deploy.yml
+```
+
+```
 # 01-deploy.yml 
 apiVersion: apps/v1
 kind: Deployment
