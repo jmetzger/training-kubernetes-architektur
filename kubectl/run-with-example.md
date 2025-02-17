@@ -26,13 +26,13 @@ kubectl run meinfoo --image=foo2
 # ImageErrPull - Image konnte nicht geladen werden 
 kubectl get pods 
 # Weitere status - info 
-kubectl describe pods foo2 
+kubectl describe pods meinfoo
 ```
 
 ## Beide Pods wieder löschen
 
 ```
-kubectl delete pods nginx foo2 
+kubectl delete pods nginx meinfoo
 kubectl get pods
 ```
 
