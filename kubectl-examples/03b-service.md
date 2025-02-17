@@ -44,7 +44,10 @@ kubectl apply -f .
 ## Schritt 2:
 
 ```
-# 02-svc.yml 
+nano 02-svc.yaml
+```
+
+```
 apiVersion: v1
 kind: Service
 metadata:
