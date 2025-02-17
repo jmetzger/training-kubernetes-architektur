@@ -21,6 +21,14 @@ su -
 kubectl g<TAB> 
 kubectl get 
 ```
+
+## Alternative (nur für eigenen Nutzer) 
+
+```
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+# danach nochmal eine Bash aufrufen. 
+```
+
 ## Alternative für k als alias für kubectl 
 
 ```
