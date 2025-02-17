@@ -6,8 +6,13 @@ mkdir -p manifests
 cd manifests
 mkdir 02-rs 
 cd 02-rs 
-vi rs.yml
 ```
+
+```
+# vi rs.yml
+nano rs.yml
+```
+
 
 ```
 apiVersion: apps/v1
