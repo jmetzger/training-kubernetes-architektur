@@ -42,9 +42,9 @@
   * The scheduler then ranks each valid Node and binds the Pod to a suitable Node. 
   * Reference implementation (other schedulers can be used)
  
-### Nodes  
+### Worker-Nodes  
 
-  * Nodes (Knoten) sind die Arbeiter (Maschinen), die Anwendungen ausführen
+  * Worker-Nodes (Knoten) sind die Arbeiter (Maschinen), die Anwendungen (Container) ausführen
   * Ref: https://kubernetes.io/de/docs/concepts/architecture/nodes/
 
 ### Pod/Pods 
