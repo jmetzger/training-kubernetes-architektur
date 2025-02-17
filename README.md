@@ -15,7 +15,7 @@
     
   1. Kubernetes Einrichtung
      * [kubectl einrichten mit namespace](/kubectl/kubectl-einrichten.md)
-     * [Bash completion installieren](kubectl/bash-completion.md)
+     * [Bash completion installieren (kubectl autocompletion)](kubectl/bash-completion.md)
 
   1. Kubernetes Praxis API-Objekte 
      * [Das Tool kubectl (Devs/Ops) - Spickzettel](/kubectl/spickzettel.md)
