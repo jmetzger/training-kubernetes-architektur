@@ -11,6 +11,10 @@ cd web
 ```
 
 ```
+nano nginx-static.yml
+```
+
+```
 # vi nginx-static.yml 
 
 apiVersion: v1
