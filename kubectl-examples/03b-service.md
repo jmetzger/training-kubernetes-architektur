@@ -48,7 +48,7 @@ kubectl apply -f .
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-nginx
+  name: nginx
 spec:
   ports:
   - port: 80
