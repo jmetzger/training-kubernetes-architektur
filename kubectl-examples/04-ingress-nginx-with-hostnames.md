@@ -181,3 +181,17 @@ spec:
               port:
                 number: 80                
 ```
+
+## Debugging Ingress 
+
+```
+# Are the services found
+kubectl describe ingress example-ingress
+# Or: Did the ingress controller find your ingress-definition Where is the work done - ??
+kubectl -n ingress logs deployments/nginx-ingress-ingress-nginx-controller
+# Adjust name of controller to your system (no -78d94....)
+kubectl -n ingress logs nginx-ingress-ingress-nginx-controller-78d94b756c-krsmv
+```
+
+
+
