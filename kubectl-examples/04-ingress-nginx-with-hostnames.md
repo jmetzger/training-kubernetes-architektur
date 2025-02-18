@@ -163,7 +163,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "app12.lab1.t3isp.de"
+  - host: "app12.lab.t3isp.de"
     http:
       paths:
         - path: /apple
