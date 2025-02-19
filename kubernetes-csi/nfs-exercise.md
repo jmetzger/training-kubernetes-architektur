@@ -31,7 +31,26 @@ mountOptions:
   - nfsvers=3
 ```
 
+## Step 2.5: Vorbereitung 
+
+```
+cd
+mkdir -p manifests
+cd manifests
+mkdir nfs
+cd nfs
+```
+
+
+
+
+
 ## Step 3: Persistent Volume Claim 
+
+```
+nano 02-pv-nfs.yaml
+```
+
 
 ```
 apiVersion: v1
@@ -47,7 +66,16 @@ spec:
   storageClassName: nfs-csi
 ```
 
+```
+kubectl apply -f .
+```
+
+
 ## Step 4: Pod 
+
+```
+nano 03-pod.yaml
+```
 
 ```
 kind: Pod
@@ -72,6 +100,9 @@ spec:
         claimName: pvc-nfs-dynamic
 ```
 
+```
+kubectl apply -f .
+```
 
 ## Reference:
 
