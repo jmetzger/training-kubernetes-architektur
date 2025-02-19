@@ -64,6 +64,8 @@ spec:
 
 ```
 kubectl apply -f .
+# Steht das Ding auf Bound ? 
+kubectl get pvc 
 ```
 
 ## Schritt 2: Deployment + Service 
