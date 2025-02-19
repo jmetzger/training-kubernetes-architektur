@@ -62,6 +62,10 @@ spec:
   storageClassName: nfs-csi
 ```
 
+```
+kubectl apply -f .
+```
+
 ## Schritt 2: Deployment + Service 
 
 ```
