@@ -32,6 +32,10 @@ wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.21.0/co
 kubectl apply -f controller.yaml 
 ```
 
+## Better use helm - chart to install server component 
+
+  * https://artifacthub.io/packages/helm/bitnami/sealed-secrets
+
 ## Schritt 3: Walkthrough - Verwendung (als normaler/unpriviligierter Nutzer)
 
 ```
