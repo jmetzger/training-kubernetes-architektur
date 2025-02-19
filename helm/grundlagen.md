@@ -3,8 +3,7 @@
 ## Wo ? 
 
 ```
-artifacts helm 
-
+Telefonbuch für die Helm-Charts 
 ```
 
  * https://artifacthub.io/
