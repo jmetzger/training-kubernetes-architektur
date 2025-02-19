@@ -151,7 +151,7 @@ curl http://146.190.178.80
 kubectl delete deploy my-nginx
 ```
 
-````
+```
 kubectl apply -f .
 ```
 
