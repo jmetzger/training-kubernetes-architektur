@@ -91,7 +91,7 @@ spec:
     spec:
       containers:
       - name: my-nginx
-        image: traefik/whoami
+        image: nginx:1.23
         ports:
         - containerPort: 80
         volumeMounts:
