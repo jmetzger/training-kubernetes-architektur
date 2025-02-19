@@ -3,5 +3,6 @@
 ```
 Ein Paket für alle Komponenten
 Einfaches Installieren, Updaten und deinstallieren 
-Feststehende Struktur 
+Feststehende Struktur
+Klare Versionierung
 ```
