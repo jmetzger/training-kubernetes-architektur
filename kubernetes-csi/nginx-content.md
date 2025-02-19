@@ -42,7 +42,7 @@ wget -O - http://10.108.0.169
 wget -O - http://10.108.0.169/testseite.html
 ```
 
-## Schritt: PVC 
+## Schritt 1: PVC anlegen 
 
 ```
 nano 01-pvc-nfs-nginx.yaml
