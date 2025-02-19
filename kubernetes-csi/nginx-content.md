@@ -125,8 +125,10 @@ spec:
 
 ```
 kubectl apply -f .
+# Get External IP 
 kubectl get svc
-kubectl get pods 
+kubectl get pods
+curl http://146.190.178.80
 ```
 
 
