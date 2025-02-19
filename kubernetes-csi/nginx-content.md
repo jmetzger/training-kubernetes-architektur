@@ -125,6 +125,8 @@ spec:
 
 ```
 kubectl apply -f .
+kubectl get svc
+kubectl get pods 
 ```
 
 
