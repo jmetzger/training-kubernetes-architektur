@@ -12,8 +12,9 @@ Telefonbuch für die Helm-Charts
 
 ```
 Chart - beeinhaltet Beschreibung und Komponenten 
-tar.gz - Format 
-oder Verzeichnis 
+1) url 
+2) tar.gz / tgz - Format 
+3) oder Verzeichnis 
 
 Wenn wir ein Chart ausführen wird eine Release erstellen 
 (parallel: image -> container, analog: chart -> release)
