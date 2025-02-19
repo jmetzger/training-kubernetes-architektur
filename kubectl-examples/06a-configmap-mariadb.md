@@ -61,6 +61,10 @@ spec:
 
 ```
 kubectl apply -f .
+kubectl get pods
+# führt bash im ersten pod des deployments aus 
+kubectl exec -it deployment/mariadb-deployment -- bash
+env | grep ROOT 
 ```
 
 ## Important Sidenode 
