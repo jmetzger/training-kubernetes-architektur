@@ -131,4 +131,31 @@ kubectl get pods
 curl http://146.190.178.80
 ```
 
+## Schritt 3: Content reinschreiben 
 
+```
+kubectl exec -it deployment/my-nginx -- bash
+```
+
+```
+echo "Hans ist nicht Jochen" > /usr/share/nginx/html/index.html
+exit 
+```
+
+```
+# Überprüfen, ob das funktioniert
+curl http://146.190.178.80 
+```
+
+```
+kubectl delete deploy my-nginx
+```
+
+````
+kubectl apply -f .
+```
+
+```
+# Überprüfen, ob das immer noch funktioniert
+curl http://146.190.178.80 
+```
