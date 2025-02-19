@@ -48,7 +48,7 @@ cd nfs
 ## Step 3: Persistent Volume Claim 
 
 ```
-nano 02-pv-nfs.yaml
+nano 02-pvc-nfs.yaml
 ```
 
 
