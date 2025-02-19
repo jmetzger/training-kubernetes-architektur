@@ -39,6 +39,7 @@
      * [Permanente Weiterleitung mit Ingress](/kubectl-examples/05-ingress-permanent-redirect.md)
      * [ConfigMap Example](/kubectl-examples/06-configmap.md)
      * [Configmap MariaDB - Example](kubectl-examples/06a-configmap-mariadb.md)
+     * [Secret MariaDB - Example](kubectl-examples/07-mariadb-secret.md)
      * [Configmap MariaDB my.cnf](kubectl-examples/06b-mariadb-configmap-configfile.md)
      
   1. Helm (Kubernetes Paketmanager) 
