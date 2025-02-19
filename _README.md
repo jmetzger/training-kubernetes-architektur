@@ -15,7 +15,7 @@
     
   1. Kubernetes Einrichtung
      * [kubectl einrichten mit namespace](#kubectl-einrichten-mit-namespace)
-     * [Bash completion installieren](#bash-completion-installieren)
+     * [Bash completion installieren (kubectl autocompletion)](#bash-completion-installieren-kubectl-autocompletion)
 
   1. Kubernetes Praxis API-Objekte 
      * [Das Tool kubectl (Devs/Ops) - Spickzettel](#das-tool-kubectl-devsops---spickzettel)
@@ -39,6 +39,7 @@
      * [Permanente Weiterleitung mit Ingress](#permanente-weiterleitung-mit-ingress)
      * [ConfigMap Example](#configmap-example)
      * [Configmap MariaDB - Example](#configmap-mariadb---example)
+     * [Secret MariaDB - Example](#secret-mariadb---example)
      * [Configmap MariaDB my.cnf](#configmap-mariadb-mycnf)
      
   1. Helm (Kubernetes Paketmanager) 
@@ -49,6 +50,7 @@
   1. Kubernetes Storage (CSI) 
      * [Überblick Persistant Volumes (CSI)](#überblick-persistant-volumes-csi)
      * [Übung Persistant Storage](#übung-persistant-storage)
+     * [Übung Persistent Storage nginx mit content](#übung-persistent-storage-nginx-mit-content)
     
   1. Kubernetes Secrets
      * [Sealed Secrets](#sealed-secrets)
@@ -269,11 +271,11 @@ Container virtualisieren Betriebssystem
    * Diese erledigen alle Aufgaben, die nötig sind, um ein Image zusammenzustellen
    * mit docker build wird dieses image erstellt 
    
-## Exmaple 
+## Example 
 
 ```
 ## syntax=docker/dockerfile:1
-FROM ubuntu:18.04
+FROM ubuntu:24.04
 COPY . /app
 RUN make /app
 CMD python /app/app.py
@@ -284,7 +286,7 @@ CMD python /app/app.py
 ### Warum Kubernetes, was macht Kubernetes
 
 
-  * Virtualisierung von Hardware - 5fache bessere Auslastung
+  * Virtualisierung - 5fache bessere Auslastung
   * Google als Ausgangspunkt 
   * Software 2014 als OpenSource zur Verfügung gestellt 
   * Optimale Ausnutzung der Hardware, hunderte bis tausende Dienste können auf einigen Maschinen laufen (Cluster)  
@@ -341,9 +343,9 @@ CMD python /app/app.py
   * The scheduler then ranks each valid Node and binds the Pod to a suitable Node. 
   * Reference implementation (other schedulers can be used)
  
-#### Nodes  
+#### Worker-Nodes  
 
-  * Nodes (Knoten) sind die Arbeiter (Maschinen), die Anwendungen ausführen
+  * Worker-Nodes (Knoten) sind die Arbeiter (Maschinen), die Anwendungen (Container) ausführen
   * Ref: https://kubernetes.io/de/docs/concepts/architecture/nodes/
 
 #### Pod/Pods 
@@ -406,9 +408,10 @@ kubectl cluster-info
 kubectl create ns jochen
 kubectl get ns
 kubectl config set-context --current --namespace jochen
+kubectl get pods 
 ```
 
-### Bash completion installieren
+### Bash completion installieren (kubectl autocompletion)
 
 
 ### Walkthrough 
@@ -432,6 +435,14 @@ su -
 kubectl g<TAB> 
 kubectl get 
 ```
+
+### Alternative (nur für eigenen Nutzer) 
+
+```
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+## danach nochmal eine Bash aufrufen. 
+```
+
 ### Alternative für k als alias für kubectl 
 
 ```
@@ -579,17 +590,17 @@ kubectl get pods -o wide
 ### Beispiel 2 (das nicht funktioniert !!)
 
 ```
-kubectl run foo2 --image=foo2
+kubectl run meinfoo --image=foo2
 ## ImageErrPull - Image konnte nicht geladen werden 
 kubectl get pods 
 ## Weitere status - info 
-kubectl describe pods foo2 
+kubectl describe pods meinfoo
 ```
 
 ### Beide Pods wieder löschen
 
 ```
-kubectl delete pods nginx foo2 
+kubectl delete pods nginx meinfoo
 kubectl get pods
 ```
 
@@ -613,6 +624,10 @@ mkdir -p manifests
 cd manifests
 mkdir -p web
 cd web
+```
+
+```
+nano nginx-static.yml
 ```
 
 ```
@@ -648,8 +663,13 @@ mkdir -p manifests
 cd manifests
 mkdir 02-rs 
 cd 02-rs 
-vi rs.yml
 ```
+
+```
+## vi rs.yml
+nano rs.yml
+```
+
 
 ```
 apiVersion: apps/v1
@@ -703,7 +723,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  replicas: 8 # tells deployment to run 2 pods matching the template
+  replicas: 8
   template:
     metadata:
       labels:
@@ -740,6 +760,10 @@ cd 04-service
 ```
 
 ```
+nano 01-deploy.yml
+```
+
+```
 ## 01-deploy.yml 
 apiVersion: apps/v1
 kind: Deployment
@@ -769,12 +793,16 @@ kubectl apply -f .
 ### Schritt 2:
 
 ```
-## 02-svc.yml 
+nano 02-svc.yaml
+```
+
+```
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-nginx
+  name: nginx
 spec:
+  type: ClusterIP
   ports:
   - port: 80
     protocol: TCP
@@ -812,17 +840,51 @@ kubectl apply -f .
 
   * kubectl muss eingerichtet sein 
 
-### Walkthrough (Setup Ingress Controller) 
+### Walkthrough (simple version)
+
+```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm install nginx-ingress ingress-nginx/ingress-nginx --namespace ingress --create-namespace
+```
+
+```
+## See when the external ip comes available
+kubectl -n ingress get pods
+kubectl -n ingress get svc -o wide 
+## Output  
+NAME                                     TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                      AGE     SELECTOR
+nginx-ingress-ingress-nginx-controller   LoadBalancer   10.245.78.34   157.245.20.222   80:31588/TCP,443:30704/TCP   4m39s   app.kubernetes.io/component=controller,app.kubernetes.io/instance=nginx-ingress,app.kubernetes.io/name=ingress-nginx
+
+## Now setup wildcard - domain for training purpose 
+*.app1.t3isp.de A 157.245.20.222 
+
+
+```
+
+### Walkthrough (extended version) 
 
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm show values ingress-nginx/ingress-nginx
 
+```
+
+
+```
+## vi values.yml
+controller:
+  publishService:
+    enabled: true
+```
+
+```
 ## It will be setup with type loadbalancer - so waiting to retrieve an ip from the external loadbalancer
 ## This will take a little. 
-helm install nginx-ingress ingress-nginx/ingress-nginx --namespace ingress --create-namespace --set controller.publishService.enabled=true 
+helm install nginx-ingress ingress-nginx/ingress-nginx --namespace ingress --create-namespace -f values.yml 
+```
 
+```
 ## See when the external ip comes available
 kubectl -n ingress get all
 kubectl --namespace ingress get services -o wide -w nginx-ingress-ingress-nginx-controller
@@ -832,12 +894,10 @@ NAME                                     TYPE           CLUSTER-IP     EXTERNAL-
 nginx-ingress-ingress-nginx-controller   LoadBalancer   10.245.78.34   157.245.20.222   80:31588/TCP,443:30704/TCP   4m39s   app.kubernetes.io/component=controller,app.kubernetes.io/instance=nginx-ingress,app.kubernetes.io/name=ingress-nginx
 
 ## Now setup wildcard - domain for training purpose 
-## inwx.com
-*.lab1.t3isp.de A 157.245.20.222 
+*.app1.t3isp.de A 157.245.20.222 
 
 
 ```
-
 
 ### Documentation for default ingress nginx
 
@@ -1133,7 +1193,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "<euername>.app1.t3isp.de"
+  - host: "<euername>.lab.t3isp.de"
     http:
       paths:
         - path: /apple
@@ -1183,7 +1243,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "app12.lab1.t3isp.de"
+  - host: "app12.lab.t3isp.de"
     http:
       paths:
         - path: /apple
@@ -1201,6 +1261,20 @@ spec:
               port:
                 number: 80                
 ```
+
+### Debugging Ingress 
+
+```
+## Are the services found
+kubectl describe ingress example-ingress
+## Or: Did the ingress controller find your ingress-definition Where is the work done - ??
+kubectl -n ingress logs deployments/nginx-ingress-ingress-nginx-controller
+## Adjust name of controller to your system (no -78d94....)
+kubectl -n ingress logs nginx-ingress-ingress-nginx-controller-78d94b756c-krsmv
+```
+
+
+
 
 ### Achtung: Ingress mit Helm - annotations
 
@@ -1444,7 +1518,7 @@ spec:
     spec:
       containers:
       - name: mariadb-cont
-        image: mariadb:latest
+        image: mariadb:11.4
         envFrom:
         - configMapRef:
             name: mariadb-configmap
@@ -1453,6 +1527,15 @@ spec:
 
 ```
 kubectl apply -f .
+kubectl get pods
+## führt bash im ersten pod des deployments aus 
+kubectl exec -it deployment/mariadb-deployment -- bash
+```
+
+```
+## in bash 
+env | grep ROOT 
+exit
 ```
 
 ### Important Sidenode 
@@ -1461,6 +1544,80 @@ kubectl apply -f .
   * So kubectl apply -f deploy.yml will not have any effect
   * to fix, use stakater/reloader: https://github.com/stakater/Reloader
 
+
+### Secret MariaDB - Example
+
+
+### Schritt 1: secret  
+
+```
+cd 
+mkdir -p manifests
+cd manifests
+mkdir secrettest
+cd secrettest 
+```
+
+```
+kubectl create secret generic mariadb-secret --from-literal=MARIADB_ROOT_PASSWORD=11abc432 --dry-run=client -o yaml > 01-secrets.yml
+```
+
+```
+kubectl apply -f .
+kubectl get secrets 
+kubectl get secrets  mariadb-secret  -o yaml
+```
+
+
+### Schritt 2: Deployment 
+```
+nano 02-deploy.yml
+```
+
+```
+##deploy.yml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - name: mariadb-cont
+        image: mariadb:latest
+        envFrom:
+        - secretRef:
+            name: mariadb-secret
+
+```
+
+```
+kubectl apply -f .
+```
+
+### Testing 
+
+```
+## Führt den Befehl env in einem Pod des Deployments aus  
+kubectl exec deployment/mariadb-deployment -- env
+## eigentlich macht er das:
+## kubectl exec mariadb-deployment-c6df6f959-q6swp -- env
+```
+
+
+### Important Sidenode 
+
+  * If configmap changes, deployment does not know
+  * So kubectl apply -f deploy.yml will not have any effect
+  * to fix, use stakater/reloader: https://github.com/stakater/Reloader
 
 ### Configmap MariaDB my.cnf
 
@@ -1535,8 +1692,7 @@ kubectl apply -f .
 ### Wo ? 
 
 ```
-artifacts helm 
-
+Telefonbuch für die Helm-Charts 
 ```
 
  * https://artifacthub.io/
@@ -1545,8 +1701,9 @@ artifacts helm
 
 ```
 Chart - beeinhaltet Beschreibung und Komponenten 
-tar.gz - Format 
-oder Verzeichnis 
+1) url 
+2) tar.gz / tgz - Format 
+3) oder Verzeichnis 
 
 Wenn wir ein Chart ausführen wird eine Release erstellen 
 (parallel: image -> container, analog: chart -> release)
@@ -1576,7 +1733,8 @@ kubectl cluster-info
 ```
 Ein Paket für alle Komponenten
 Einfaches Installieren, Updaten und deinstallieren 
-Feststehende Struktur 
+Feststehende Struktur
+Klare Versionierung
 ```
 
 ### Helm Example
@@ -1780,14 +1938,33 @@ metadata:
 provisioner: nfs.csi.k8s.io
 parameters:
   server: 10.135.0.67
-  share: /var/nfs/tln1
+  share: /var/nfs
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 mountOptions:
   - nfsvers=3
 ```
 
+### Step 2.5: Vorbereitung 
+
+```
+cd
+mkdir -p manifests
+cd manifests
+mkdir nfs
+cd nfs
+```
+
+
+
+
+
 ### Step 3: Persistent Volume Claim 
+
+```
+nano 02-pvc-nfs.yaml
+```
+
 
 ```
 apiVersion: v1
@@ -1803,7 +1980,16 @@ spec:
   storageClassName: nfs-csi
 ```
 
+```
+kubectl apply -f .
+```
+
+
 ### Step 4: Pod 
+
+```
+nano 03-pod.yaml
+```
 
 ```
 kind: Pod
@@ -1828,10 +2014,176 @@ spec:
         claimName: pvc-nfs-dynamic
 ```
 
+```
+kubectl apply -f .
+```
 
 ### Reference:
 
  * https://rudimartinsen.com/2024/01/09/nfs-csi-driver-kubernetes/
+
+### Übung Persistent Storage nginx mit content
+
+
+### Prerequisites 
+
+  * nfs-csi is installed
+  * storage-class nfs-csi is setup
+
+```
+nano 01-sc.yaml
+```
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-csi
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 10.135.0.13
+  share: /var/nfs
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions:
+  - nfsvers=3
+```
+
+### Frage: Wo liegen in nginx die Daten 
+
+```
+kubectl run nginx --image nginx:1.23 
+kubectl get pods 
+kubectl exec -it nginx -- bash
+## im pod 
+cd /usr/share/nginx/html
+echo "hallo jochen war hier" > index.html
+echo "hallo jochen war hier" > testseite.html
+
+##  10.108.0.169
+kubectl run -it podtester --image=busybox
+## in der busybox 
+wget -O - http://10.108.0.169
+wget -O - http://10.108.0.169/testseite.html
+```
+
+### Schritt 1: PVC anlegen 
+
+```
+nano 01-pvc-nfs-nginx.yaml
+```
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-nfs-nginx 
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: nfs-csi
+```
+
+```
+kubectl apply -f .
+## Steht das Ding auf Bound ? 
+kubectl get pvc 
+```
+
+### Schritt 2: Deployment + Service 
+
+```
+nano 02-deploy.yml 
+```
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nginx
+spec:
+  selector:
+    matchLabels:
+      app: my-nginx
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: my-nginx
+    spec:
+      containers:
+      - name: my-nginx
+        image: nginx:1.23
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: persistent-storage
+          mountPath: "/usr/share/nginx/html"
+          readOnly: false
+      volumes:
+      - name: persistent-storage
+        persistentVolumeClaim:
+          claimName: pvc-nfs-nginx
+```
+
+```
+nano 03-svc.yaml 
+```
+
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: my-nginx
+```
+
+```
+kubectl apply -f .
+## Get External IP 
+kubectl get svc
+kubectl get pods
+curl http://146.190.178.80
+```
+
+### Schritt 3: Content reinschreiben 
+
+```
+kubectl exec -it deployment/my-nginx -- bash
+```
+
+```
+echo "Hans ist nicht Jochen" > /usr/share/nginx/html/index.html
+exit 
+```
+
+```
+## Überprüfen, ob das funktioniert
+curl http://146.190.178.80 
+```
+
+```
+kubectl delete deploy my-nginx
+```
+
+```
+kubectl apply -f .
+```
+
+```
+## Überprüfen, ob das immer noch funktioniert
+curl http://146.190.178.80 
+```
 
 ## Kubernetes Secrets
 
@@ -1869,6 +2221,10 @@ install -m 755 kubeseal /usr/local/bin/kubeseal
 wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.21.0/controller.yaml
 kubectl apply -f controller.yaml 
 ```
+
+### Better use helm - chart to install server component 
+
+  * https://artifacthub.io/packages/helm/bitnami/sealed-secrets
 
 ### Schritt 3: Walkthrough - Verwendung (als normaler/unpriviligierter Nutzer)
 
@@ -1963,17 +2319,17 @@ kubectl get pods -o wide
 ### Beispiel 2 (das nicht funktioniert !!)
 
 ```
-kubectl run foo2 --image=foo2
+kubectl run meinfoo --image=foo2
 ## ImageErrPull - Image konnte nicht geladen werden 
 kubectl get pods 
 ## Weitere status - info 
-kubectl describe pods foo2 
+kubectl describe pods meinfoo
 ```
 
 ### Beide Pods wieder löschen
 
 ```
-kubectl delete pods nginx foo2 
+kubectl delete pods nginx meinfoo
 kubectl get pods
 ```
 
@@ -2005,6 +2361,14 @@ su -
 kubectl g<TAB> 
 kubectl get 
 ```
+
+### Alternative (nur für eigenen Nutzer) 
+
+```
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+## danach nochmal eine Bash aufrufen. 
+```
+
 ### Alternative für k als alias für kubectl 
 
 ```
